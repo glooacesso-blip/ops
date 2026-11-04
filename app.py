@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3, os
 
-app = Flask(__name__)
-DB = 'grupos.db'
-SENHA_ADMIN = 'suasenha123'  # troque depois
+import os
+
+# Define o caminho absoluto para a pasta templates
+template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates'))
+
+# Inicializa o Flask apontando para esse caminho
+app = Flask(__name__, template_folder=template_dir)'  # troque depois
 
 def get_db():
     conn = sqlite3.connect(DB)
