@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Admin — Grupos{% endblock %}
+{% block content %}
+
+<h1 style="margin-bottom: 1rem;">Painel Admin</h1>
+
+<h2 style="margin: 1.5rem 0 0.5rem;">⏳ Pendentes ({{ pendentes|length }})</h2>
+{% if pendentes %}
+    {% for g in pendentes %}
+    <div class="card">
+        <h3>{{ g['titulo'] }}</h3>
+        <p>{{ g['descricao'] }}</p>
+        <span class="badge">{{ g['cat_nome'] }}</span>
+        <span class="badge">{{ g['plataforma'] | capitalize }}</span>
+        <br><br>
+        <a href="{{ g['link'] }}" target="_blank" rel="noopener" class="btn">Ver link</a>
+        <a href="/aprovar/{{ g['id'] }}?senha={{ senha }}" class="btn" style="background:#16a34a;">✅ Aprovar</a>
+        <a href="/remover/{{ g['id'] }}?senha={{ senha }}" class="btn" style="background:#dc2626;">🗑️ Remover</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card"><p>Nenhum grupo pendente. 🎉</p></div>
+{% endif %}
+
+<h2 style="margin: 1.5rem 0 0.5rem;">✅ Aprovados ({{ aprovados|length }})</h2>
+{% if aprovados %}
+    {% for g in aprovados %}
+    <div class="card">
+        <h3>{{ g['titulo'] }} {% if g['destaque'] %}<span class="badge destaque">⭐</span>{% endif %}</h3>
+        <p>{{ g['descricao'] }}</p>
+        <span class="badge">{{ g['cat_nome'] }}</span>
+        <br><br>
+        <a href="/destacar/{{ g['id'] }}?senha={{ senha }}" class="btn" style="background:#f59e0b;">
+            {% if g['destaque'] %}Remover destaque{% else %}⭐ Destacar{% endif %}
+        </a>
+        <a href="/remover/{{ g['id'] }}?senha={{ senha }}" class="btn" style="background:#dc2626;">🗑️ Remover</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card"><p>Nenhum grupo aprovado ainda.</p></div>
+{% endif %}
+
+{% endblock %}

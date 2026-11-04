@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ categoria_atual or 'Início' }} — Diretório de Grupos{% endblock %}
+{% block content %}
+
+<h1 style="margin-bottom: 1rem;">
+    {% if categoria_atual %}Categoria: {{ categoria_atual }}{% else %}Grupos de WhatsApp e Telegram{% endif %}
+</h1>
+
+<div class="categorias">
+    <a href="/">Todas</a>
+    {% for cat in categorias %}
+        <a href="/categoria/{{ cat['slug'] }}">{{ cat['nome'] }}</a>
+    {% endfor %}
+</div>
+
+{% if grupos %}
+    {% for g in grupos %}
+    <div class="card">
+        <h3>
+            {{ g['titulo'] }}
+            {% if g['destaque'] %}<span class="badge destaque">⭐ Destaque</span>{% endif %}
+        </h3>
+        <p>{{ g['descricao'] }}</p>
+        <span class="badge">{{ g['cat_nome'] }}</span>
+        <span class="badge">{{ g['plataforma'] | capitalize }}</span>
+        <br><br>
+        <a href="{{ g['link'] }}" target="_blank" rel="noopener"
+           class="btn {% if g['plataforma'] == 'whatsapp' %}btn-whatsapp{% else %}btn-telegram{% endif %}">
+           Entrar no grupo
+        </a>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card">
+        <p>Nenhum grupo cadastrado ainda. Seja o primeiro a <a href="/cadastrar">cadastrar um grupo</a>!</p>
+    </div>
+{% endif %}
+
+{% endblock %}
