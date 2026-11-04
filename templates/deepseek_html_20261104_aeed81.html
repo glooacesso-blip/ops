@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Cadastrar grupo{% endblock %}
+{% block content %}
+
+<h1 style="margin-bottom: 1rem;">Cadastrar novo grupo</h1>
+
+<div class="card">
+    <form method="POST" action="/cadastrar">
+        <label>Título do grupo</label>
+        <input type="text" name="titulo" required maxlength="100" placeholder="Ex: Ofertas de Eletrônicos">
+
+        <label>Descrição</label>
+        <textarea name="descricao" required maxlength="300" placeholder="Descreva o grupo em poucas palavras..."></textarea>
+
+        <label>Link de convite</label>
+        <input type="url" name="link" required placeholder="https://chat.whatsapp.com/... ou https://t.me/...">
+
+        <label>Plataforma</label>
+        <select name="plataforma" required>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="telegram">Telegram</option>
+        </select>
+
+        <label>Categoria</label>
+        <select name="categoria_id" required>
+            {% for cat in categorias %}
+            <option value="{{ cat[0] }}">{{ cat[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+        <button type="submit" class="btn">Enviar grupo</button>
+    </form>
+</div>
+
+{% endblock %}

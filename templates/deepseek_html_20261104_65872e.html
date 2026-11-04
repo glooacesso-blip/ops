@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Admin — Grupos pendentes{% endblock %}
+{% block content %}
+
+<h1 style="margin-bottom: 1rem;">Grupos pendentes de aprovação</h1>
+
+{% if pendentes %}
+    {% for g in pendentes %}
+    <div class="card">
+        <h3>{{ g[1] }}</h3>
+        <p>{{ g[2] }}</p>
+        <span class="badge">{{ g[7] }}</span>
+        <span class="badge">{{ g[4] | capitalize }}</span>
+        <br><br>
+        <a href="{{ g[3] }}" target="_blank" rel="noopener" class="btn">Ver link</a>
+        <a href="/aprovar/{{ g[0] }}" class="btn" style="background:#16a34a;">✅ Aprovar</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card"><p>Nenhum grupo pendente. 🎉</p></div>
+{% endif %}
+
+{% endblock %}
